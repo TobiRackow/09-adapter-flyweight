@@ -6,17 +6,19 @@ import android.widget.ListView;
 
 import de.fhro.inf.prg3.a09.model.FighterFactory;
 import de.fhro.inf.prg3.a09.adapter.FighterListAdapter;
+import de.fhro.inf.prg3.a09.model.FlyweightFactory;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final int FIGHTER_COUNT = 20;
+    private static final int FIGHTER_COUNT = 80;
+    public FlyweightFactory flyweightFactory = new FlyweightFactory();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        FighterFactory fighterFactory = new FighterFactory(this);
+        FighterFactory fighterFactory = new FighterFactory(this,flyweightFactory);
         FighterListAdapter fighterListAdapter = new FighterListAdapter(this);
 
         final ListView fighterListView = findViewById(R.id.fighter_list_view);

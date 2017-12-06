@@ -25,30 +25,30 @@ public class FighterFactory {
     private final Context context;
     private final NameGenerator nameGenerator;
 
-    public FighterFactory(Context context) {
+    private FlyweightFactory flyweightFactory;
+
+    public FighterFactory(Context context,FlyweightFactory flyweightFactory) {
         this.context = context;
         nameGenerator = new NameGenerator(context);
         random = new Random();
+        this.flyweightFactory = flyweightFactory;
     }
 
     public Fighter createFighter() {
         switch (random.nextInt(6)) {
             case 0:
-                return new AWing(nameGenerator.generateName(), loadImage(R.drawable.awing));
+                return new AWing(nameGenerator.generateName(), flyweightFactory.getFlyweight(R.drawable.awing,context));
             case 1:
-                return new XWing(nameGenerator.generateName(), loadImage(R.drawable.xwing));
+                return new XWing(nameGenerator.generateName(), flyweightFactory.getFlyweight(R.drawable.xwing,context));
             case 2:
-                return new YWing(nameGenerator.generateName(), loadImage(R.drawable.ywing));
+                return new YWing(nameGenerator.generateName(), flyweightFactory.getFlyweight(R.drawable.ywing,context));
             case 3:
-                return new TieBomber(nameGenerator.generateName(), loadImage(R.drawable.tiebomber));
+                return new TieBomber(nameGenerator.generateName(), flyweightFactory.getFlyweight(R.drawable.tiebomber,context));
             case 4:
-                return new TieFighter(nameGenerator.generateName(), loadImage(R.drawable.tiefighter));
+                return new TieFighter(nameGenerator.generateName(), flyweightFactory.getFlyweight(R.drawable.tiefighter,context));
             default:
-                return new TieInterceptor(nameGenerator.generateName(), loadImage(R.drawable.tieinterceptor));
+                return new TieInterceptor(nameGenerator.generateName(), flyweightFactory.getFlyweight(R.drawable.tieinterceptor,context));
         }
     }
 
-    private Drawable loadImage(int imageId) {
-        return new BitmapDrawable(context.getResources(), BitmapFactory.decodeResource(context.getResources(), imageId));
-    }
 }
